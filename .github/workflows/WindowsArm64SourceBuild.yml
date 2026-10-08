@@ -1,0 +1,25 @@
+name: Experimental Windows ARM64 source build
+
+on:
+  push:
+    branches:
+      - test/windows-arm64-source-build
+
+permissions:
+  contents: read
+
+jobs:
+  build-windows-arm64-source:
+    runs-on: windows-11-arm
+    timeout-minutes: 120
+    steps:
+      - name: Checkout CLI repo
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
+
+      - name: Build native ARM64 ZIP
+        shell: cmd
+        run: |
+          set CLI_VERSION=2.91.0
+          set ARCH=arm64
+          set TARGET=zip
+          call build_scripts\windows\scripts\build.cmd
